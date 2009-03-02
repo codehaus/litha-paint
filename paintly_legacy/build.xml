@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="paintly" basedir="." default="build.test.win">
+
+   <property name="src" location="${basedir}/src"/>	
+   <property name="lib" location="${basedir}/lib"/>
+   <property name="doc" location="${basedir}/doc"/>
+   <property name="tmp" location="${basedir}/tmp"/>
+   <property name="obfusc" location="${basedir}/obfuscator"/>
+   <property name="build" location="${basedir}/WEB-INF/classes"/>
+   <property name="html" location="${basedir}/WEB-INF/html"/>
+   <property name="war" location="${basedir}/war"/>
+   <property name="tomcat_webapp" location="C:/apache-tomcat-5.5.17/webapps/"/>	
+
+   <path id="project.class.path">
+       <fileset dir="${lib}">
+       <include name="*.jar"/>
+       </fileset>
+       <dirset dir="${build}"/>
+   </path>	
+	
+   <target name="clean.test.webapp">
+   	  <delete dir="${tomcat_webapp}/ROOT"/>
+   	  <delete file="${tomcat_webapp}/ROOT.war" />
+   </target>
+	
+   <target name="clean">
+       <delete dir="${doc}"/>
+       <delete dir="${war}"/>
+   	   <delete dir="${tmp}"/>
+       <delete dir="${build}/**.*"/>
+   </target>
+
+   <target name="init" depends="clean">
+     <tstamp/>
+     <mkdir dir="${build}"/>
+     <mkdir dir="${war}"/>	 
+   	 <mkdir dir="${tmp}"/>
+   </target>
+
+   <target name="compile" depends="init">
+      <javac srcdir="${src}" destdir="${build}" debug="yes" classpathref="project.class.path"/>
+   </target>
+
+   <target name="docgen">
+      <mkdir dir="${doc}"/>
+      <javadoc destdir="${doc}" classpathref="project.class.path">
+         <fileset dir="${src}"/>
+      </javadoc>
+   </target>
+   
+   <target name="full.build">
+      <antcall target="deploy"/>  
+      <antcall target="docgen"/> 	
+   </target>
+	
+	<target name="update_light">
+		<copy todir="${tomcat_webapp}/${ant.project.name}">
+			<fileset dir="${html}" />
+		</copy>
+	</target>
+	
+	<target name="build.jar" depends="compile">
+	    <echo message="Build jar for project"/>
+		<jar jarfile="${war}/${ant.project.name}.jar">
+			<fileset dir="${build}" includes="**/*.class"/>
+		</jar>
+	</target>
+	
+	<target name="append.js" depends="compile">
+	    <echo message="Appending JS files"/>
+		
+		<copy todir="${tmp}">
+			<fileset dir="${basedir}/WEB-INF/html">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<java classname="org.paintly.merge.UnionJSFiles" classpath="${build}">
+			<arg value="${tmp}"/>
+		</java>
+	</target>
+	
+	<target name="obfuscate.js" depends="append.js">
+		<java classname="JSO" classpath="${obfusc}" dir="${tmp}" fork="yes">
+			<arg value="index.js" />
+			<arg value="e=${obfusc}/final.txt" />
+			<redirector output="${tmp}/index.jso" error="${obfusc}/map.txt"></redirector>
+		</java>
+		<rename dest="${tmp}/index.js" src="${tmp}/index.jso"/>
+	</target>
+	
+	  <target name="build.production.win" depends="obfuscate.js">
+	    <echo message="Building litha-project in production mode for Win"/>
+		<copy todir="${build}">
+			<fileset dir="${basedir}/WEB-INF">
+				<include name="*.properties"/>
+				<include name="*.windows"/>
+			</fileset>
+		</copy>
+	  	<move todir="${build}">
+	  		<fileset dir="${build}">
+	  			<include name="*.windows"/>
+	  	     </fileset>
+	  		<globmapper from="*.windows" to="*.properties"/>
+	  	</move>
+		<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+			<fileset dir="${tmp}"/>
+			<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+		</war>
+	  </target>
+	
+	<target name="build.production.linux" depends="obfuscate.js">
+		<echo message="Building litha-project in production mode for Win"/>
+				<copy todir="${build}">
+					<fileset dir="${basedir}/WEB-INF">
+						<include name="*.properties"/>
+						<include name="*.linux"/>
+					</fileset>
+				</copy>
+			  	<move todir="${build}">
+			  		<fileset dir="${build}">
+			  			<include name="*.linux"/>
+			  	     </fileset>
+			  		<globmapper from="*.linux" to="*.properties"/>
+			  	</move>
+				<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+					<fileset dir="${tmp}"/>
+					<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+				</war>
+	</target>
+	
+
+	  <target name="build.test.win" depends="append.js">
+	    <echo message="Building litha-project in production mode for Win"/>
+		<copy todir="${build}">
+			<fileset dir="${basedir}/WEB-INF">
+				<include name="*.properties"/>
+				<include name="*.windows"/>
+			</fileset>
+		</copy>
+	  	<move todir="${build}">
+	  		<fileset dir="${build}">
+	  			<include name="*.windows"/>
+	  	     </fileset>
+	  		<globmapper from="*.windows" to="*.properties"/>
+	  	</move>
+		<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+			<fileset dir="${tmp}"/>
+			<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+		</war>
+	  </target>
+	
+	
+	  <target name="deploy.test.war" depends="clean.test.webapp, build.test.win">
+	  	  <copy todir="${tomcat_webapp}">
+	  	  	  <fileset dir="${war}">
+	  	  	  	<include name="ROOT.war" />
+	  	  	  </fileset>
+	  	  </copy>
+	  </target>
+
+	  <target name="deploy.production.win" depends="clean.test.webapp, build.production.win">
+	  	  <copy todir="${tomcat_webapp}">
+	  	  	  <fileset dir="${war}">
+	  	  	  	<include name="ROOT.war" />
+	  	  	  </fileset>
+	  	  </copy>
+	  </target>
+	  
+	  
+
+</project>

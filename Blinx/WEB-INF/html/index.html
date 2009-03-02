@@ -1,0 +1,403 @@
+<HTML>
+<HEAD>
+
+<TITLE>Blinx Service</TITLE>
+
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+
+<script src="wz_jsgraphics.js"></script>
+<script src="litha.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="imagetoolbar" content="no" />
+<style>
+.functionsTopic {
+  color : #FF0000;
+  background-color: #FFFF00;
+}
+span {
+  	cursor: hand;
+	cursor: pointer;  
+}
+</style>
+
+</HEAD>
+<body leftmargin="0" topmargin="0" bgcolor="white" onload="initPaint()">
+<div id="top_header" style="display: none; background-color:#FF0">This
+block changes absolute position of canvas. Call recalcPosition() for
+refreshing coordinates of canvas after position has been changed.</div>
+<table>
+	<tr>
+		<td>
+		<table>
+			<tr>
+				<td><span class="functionsTopic">Drawing functions</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleRectMode()">toggleRectMode()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleEllipseMode()">toggleEllipseMode()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleLineMode()">toggleLineMode()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.togglePolylineMode();log('press ESC or finishPolyline()')">togglePolylineMode()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.togglePolygonMode();log('press ESC or finishPolyline()')">togglePolygonMode()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.finishPolyline()">finishPolyline()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleBezierMode();log('press ESC or finishBezier()')">toggleBezierMode()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.finishBezier()">finishBezier()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.togglePenMode();">togglePenMode()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleClosedPenMode();">toggleClosedPenMode()</span></td>
+			</tr>			
+			<tr>
+				<td><span class="functionsTopic">Coordinates refreshing function</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="showHeader()">show header, then call
+				recalcPosition()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="hideHeader()">hide header, then call
+				recalcPosition()</span></td>
+			</tr>
+			<tr>
+				<td><span class="functionsTopic">Manipulating functions</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleSelectionMode()">toggleSelectionMode()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.performUndo()">performUndo()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.performRedo()">performRedo()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.performCopy()">performCopy()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.performPaste()">performPaste()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.deleteFocusedObject()">deleteFocusedObject()</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span onclick="can.sendToBack()">sendToBack()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.sendBackward()">sendBackward()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.bringForward()">bringForward()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.bringToFront()">bringToFront()</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleShiftMode()">toggleShiftMode()</span></td>
+			</tr>
+			<tr>
+				<td><span class="functionsTopic">Text functions</span></td>
+			</tr>
+			<tr>
+				<td><span onclick="can.toggleTextMode()">toggleTextMode()</span></td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setFontFamily(document.getElementById('fontFamily').value)">setFontFamily</span>(<select
+					id="fontFamily">
+					<option value="Arial" selected="true">Arial</option>
+					<option value="Verdana">Verdana</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setFontSize(document.getElementById('fontSize').value)">setFontSize</span>(<select
+					id="fontSize">
+					<option value="10px">10px</option>
+					<option value="20px">20px</option>
+					<option value="30px" selected="true">30px</option>
+					<option value="40px">40px</option>
+					<option value="50px">50px</option>
+					<option value="60px">60px</option>
+					<option value="70px">70px</option>
+					<option value="80px">80px</option>
+					<option value="90px">90px</option>
+					<option value="100px">100px</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setFontWeight(document.getElementById('fontWeight').value)">setFontWeight</span>(<select
+					id="fontWeight">
+					<option value="normal" selected="true">normal</option>
+					<option value="bold">bold</option>
+					<option value="bolder">bolder</option>
+					<option value="lighter">lighter</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setFontStyle(document.getElementById('fontStyle').value)">setFontStyle</span>(<select
+					id="fontStyle">
+					<option value="normal" selected="true">normal</option>
+					<option value="italic">italic</option>
+					<option value="oblique">oblique</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setTextDecoration(document.getElementById('textDecoration').value)">setTextDecoration</span>(<select
+					id="textDecoration">
+					<option value="none" selected="true">none</option>
+					<option value="underline">underline</option>
+					<option value="overline">overline</option>
+					<option value="line-through">line-through</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span class="functionsTopic">Image inserting function</span></td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.insertImage(document.getElementById('insertImage').value, insertImageCallback)">insertImage</span>(<input
+					id="insertImage" type="text"
+					value="https://www.google.com/accounts/talk_bubbles.gif"></input>,
+				callback)</td>
+			</tr>
+			<tr>
+				<td><span class="functionsTopic">Document manipulating functions</span>
+				</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.newDocument(parseInt(document.getElementById('canvas_width').value),parseInt(document.getElementById('canvas_height').value),parseInt(document.getElementById('doc_width').value),parseInt(document.getElementById('doc_height').value),document.getElementById('doc_bgcolor').value)">newDocument</span>(<input
+					id="canvas_width" type="text"
+					value="700"></input>,<input
+					id="canvas_height" type="text"
+					value="700"></input>,<input
+					id="doc_width" type="text"
+					value="500"></input>,<input
+					id="doc_height" type="text"
+					value="500"></input>,<input
+					id="doc_bgcolor" type="text"
+					value="#EEEEFE"></input>)</td>
+			</tr>			
+			<tr>
+				<td><span
+					onclick="can.performOpen(document.getElementById('openFile').value,document.getElementById('fileType').value,openCallback)">performOpen</span>(<input
+					id="openFile" type="text"
+					value="http://www.nd.edu/~networks/HumanDynamics_20Oct05/images/Einstein_1_JPEG.jpg"></input>,<select
+					id="fileType">
+					<option value="LITHA">LITHA</option>
+					<option value="JPEG" selected="true">JPEG</option>
+					<option value="GIF">GIF</option>
+					<option value="BMP">BMP</option>
+					<option value="PNG">PNG</option>
+				</select>,callback)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.performSave(document.getElementById('fileType2').value,saveCallback)">performSave</span>(<select
+					id="fileType2">
+					<option value="LITHA">LITHA</option>
+					<option value="JPEG" selected="true">JPEG</option>
+					<option value="TIFF">TIFF</option>
+					<option value="PNG">PNG</option>
+					<option value="SVG">SVG</option>
+				</select>,callback)</td>
+			</tr>
+			<tr>
+				<td><span class="functionsTopic">Color and Style functions</span></td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.changeBackgroundColor(document.getElementById('backgroundColor').value)">changeBackgroundColor</span>(<input
+					id="backgroundColor" type="text" value="#CCC"></input>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setStrokeColor(document.getElementById('strokeColor').value)">setStrokeColor</span>(<input
+					type="text" value="#000" id="strokeColor"></input>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setStrokeWidth(document.getElementById('strokeWidth').value)">setStrokeWidth</span>(<input
+					type="text" value="1" id="strokeWidth"></input>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setStrokeOpacity(document.getElementById('strokeOpacity').value)">setStrokeOpacity</span>(<select
+					id="strokeOpacity">
+					<option value="0.1">0.1</option>
+					<option value="0.2">0.2</option>
+					<option value="0.3">0.3</option>
+					<option value="0.4">0.4</option>
+					<option value="0.5">0.5</option>
+					<option value="0.6">0.6</option>
+					<option value="0.7">0.7</option>
+					<option value="0.8">0.8</option>
+					<option value="0.9">0.9</option>
+					<option value="1" selected="true">1</option>
+				</select>)</td>
+			</tr>
+			<tr>
+			   <td><span
+					onclick="can.setStrokeDasharray(document.getElementById('strokeDasharray').value)">setStrokeDasharray</span>(<input
+					type="text" value="2 1" id="strokeDasharray"></input>)</td>
+			</tr>			
+			<tr>
+				<td><span
+					onclick="can.setStrokeLinecap(document.getElementById('strokeLinecap').value)">setStrokeLinecap</span>(<select
+					id="strokeLinecap">
+					<option value="butt">butt</option>
+					<option value="square">square</option>
+					<option value="round" selected="true">round</option>
+				</select>)</td>
+			</tr>			
+			<tr>
+				<td><span
+					onclick="can.setStrokeLinejoin(document.getElementById('strokeLinejoin').value)">setStrokeLinejoin</span>(<select
+					id="strokeLinejoin">
+					<option value="round">round</option>
+					<option value="miter">miter</option>
+					<option value="bevel" selected="true">bevel</option>
+				</select>)</td>
+			</tr>						
+			<tr>
+			   <td><span
+					onclick="can.setStrokeMiterlimit(document.getElementById('strokeMiterlimit').value)">setStrokeMiterlimit</span>(<input
+					type="text" value="4.0" id="strokeMiterlimit"></input>)</td>
+			</tr>						
+			<tr>
+				<td><span onclick="can.applyStroke()">applyStroke()</span></td>
+			</tr>			
+			<tr>
+				<td><span
+					onclick="can.setFillColor(document.getElementById('fillColor').value)">setFillColor</span>(<input
+					type="text" value="#147" id="fillColor"></input>)</td>
+			</tr>
+			
+			<tr>
+				<td><span
+					onclick="can.setFillOpacity(document.getElementById('fillOpacity').value)">setFillOpacity</span>(<select
+					id="fillOpacity">
+					<option value="0.1">0.1</option>
+					<option value="0.2">0.2</option>
+					<option value="0.3">0.3</option>
+					<option value="0.4">0.4</option>
+					<option value="0.5">0.5</option>
+					<option value="0.6">0.6</option>
+					<option value="0.7">0.7</option>
+					<option value="0.8">0.8</option>
+					<option value="0.9">0.9</option>
+					<option value="1" selected="true">1</option>
+				</select>)</td>
+			</tr>
+			<tr>
+				<td><span
+					onclick="can.setFillRule(document.getElementById('fillRule').value)">setFillRule</span>(<select
+					id="fillRule">
+					<option value="nonzero" selected="true">nonzero</option>
+					<option value="evenodd">evenodd</option>
+				</select>)</td>
+			</tr>									
+			<tr>
+				<td><span onclick="can.applyFill()">applyFill()</span></td>
+			</tr>
+		</table>
+		</td>
+		<td valign="top">
+		<div id="mycanvas" style="border-style: outset; border: solid; border-width: 1px; border-color: #25820A;"></div>
+		<div id="info"></div>
+		</td>
+	</tr>
+</table>
+
+<script>
+  var can;
+  
+  function initPaint() {
+    can = new Paint ("mycanvas",700,700,500,500,"#EEEEFE");
+    can.init();
+    if (document.all || window.opera) {
+      document.body.onkeydown = handleKeyDown;
+    } else {
+      document.addEventListener("keydown",handleKeyDown,false);
+    }
+    
+  }
+  
+   
+  function openCallback(result) {
+    if (result == 0) {
+      log("document opened successfully");
+    } else {
+      log("can't open document");
+    }
+  }
+  
+  function saveCallback(result,url){
+      if (result == 0) {
+   	    log("You can get file from url: "+url);
+   	  } else {
+   	    log("Saving failed.");
+   	  }
+  }
+  
+  function insertImageCallback(code) {
+      log("image inserted with the code: "+code);
+  }
+  
+       
+  function showHeader() {
+    document.getElementById('top_header').style.display='block';
+    can.recalcPosition();
+  }
+  
+  function hideHeader() {
+    document.getElementById('top_header').style.display='none';
+    can.recalcPosition();
+  }
+  
+  function log(message) {
+    document.getElementById("info").innerHTML=message;
+    can.recalcPosition();
+  }
+  
+  function handleKeyDown(evt) {
+    var keyCode = (evt ? evt.keyCode : event.keyCode);
+    if (keyCode == 27) {
+      can.finishBezier();
+      can.finishPolyline();
+      log("");
+    }
+  }
+  
+  
+</script>
+
+</body>
+
+</HTML>

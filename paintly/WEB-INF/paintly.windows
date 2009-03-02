@@ -1,0 +1,40 @@
+# common config proeprtyfile for paintly project
+
+# session invalidate time
+invalidate_session_time = 1000
+
+
+# session timeout behind new operation
+
+# operation - getting image
+sessionGettingImage = 1000
+
+# operation - putting command
+sessionPuttingObject = 1000
+
+# directory where all user's spaces would be created
+userspace.dir = C:\\Temp\\Userspace
+
+# directory where saved user's documents are located
+save.dir = Home
+
+# directory where autosaved client's workstate located
+autosave.dir = Autosave
+
+#directory where published user's documents are located
+publish.dir = Published
+
+#directory where client exceptions are saved
+
+clientexception.dir = C:\\Temp\\UserExceptions
+
+
+reportPath = C:\\Temp\\report.txt
+
+authorLength = 30
+
+emailLength = 30
+
+descriptionLength = 700
+
+temp = C:\\Temp

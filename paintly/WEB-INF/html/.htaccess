@@ -1,0 +1,9 @@
+Deny from all
+
+RewriteEngine on
+
+Options +FollowSymlinks
+
+RewriteBase /public
+
+RewriteRule ^public/([^/]+)/(.*)$ /user_public/$1/Published/$2

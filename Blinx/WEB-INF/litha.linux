@@ -1,0 +1,16 @@
+# common config proeprtyfile for paintly project
+
+# session invalidate time
+invalidate_session_time = 6000
+
+
+# directory where documents and images would be saved
+userspace.dir = /home/tomcat/litha-api/space
+
+
+#directory where client exceptions are saved
+clientexception.dir = /home/tomcat/userexceptions
+
+temp = /home/tomcat/temp-api/temp
+
+web.dir = http://litha-paint.com/service-storage

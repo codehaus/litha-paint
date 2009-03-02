@@ -1,0 +1,236 @@
+#popupHeader{
+	background-color: #ffffff;
+	color: #ffffff;
+}
+#popupHeaderClose{
+	background-color: #ffffff;
+	color: #ffffff;
+	cursor: hand;
+	cursor: pointer;
+}
+#popupApply{
+	background-color: #ffffff;
+	color: #ffffff;
+	cursor: hand;
+	cursor: pointer;
+}
+#btnColorInsert{
+	border:0;
+}
+
+#insertColor,#colorBox{
+	border-width:1;
+	height:17;
+	font-size:9px;
+}
+
+.textColorPicker{
+	font-size:10px;
+}
+
+.systemColor{
+	border-color: #25820A;
+	border-width: 1px;
+	border: solid;
+	margin:1;
+	background-color: white;	
+}
+
+.applyBtn{
+	width:66px;
+	height:19;
+	border-width:0;
+	background-image:url(img/pickers/apply.gif);
+}
+
+#systemFont{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+}
+.pDIV{
+	background-color: white;
+}
+
+fieldset{
+    border-color: #CCCCCC;
+	border-width: 1px;
+
+	background-color: white;
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+	padding:3;	
+}
+
+.dashedArray{
+	border-color: #25820A;
+	border-width: 1px;
+}
+
+textarea{
+	border-color: #25820A;
+	border-width: 1px;
+}
+
+.icon_selected{
+        border: solid;
+        border-color: #B82100;
+        border-width: 1px;
+	  padding-left:4;
+}
+
+.icon{
+	border: solid;
+	border-color: #FFFFFF;
+	border-width: 1px;
+	cursor: hand;
+	cursor: pointer;
+	padding-left:4;
+}
+.systemGreenFont{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+	background-color: #FFFFFF;
+}
+
+.systemLogoFont{
+	font-family: Verdana;
+	font-size: 21px;
+	font-weight: bold;
+	color: #42C419;
+	background-color: #FFFFFF;
+}
+
+.logoProgrammFont{
+	font-family: Verdana;
+	font-size: 17px;
+	font-weight: normal;
+	color: #42C419;
+	background-color: #FFFFFF;
+   position: absolute;
+   left:400px;
+   top:5px;
+}
+
+.lithaHeadPanel{
+   position: absolute;
+   height:45px;
+   width: 700px;
+   min-width:700px;
+   left:40px;
+   top:5
+}
+
+.lithaHeadPanel{
+   position: absolute;
+   height:45px;
+   min-width:700px;
+   left:40px;
+   top:5;
+}
+
+.lithaThinLinePanel{
+	background-color: #42C419;
+   height: 2px;
+   position: absolute;
+   width:100%;
+   top:37;
+   font-size: 2px;
+}
+
+.lithaMenuHeadPanel{
+   position: absolute;
+   width:700px;
+   top: 45px;
+   left: 40px;
+   text-decoration: none;
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+}
+
+.systemGreenFontMenu{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+	background-color: #FFFFFF;
+   text-decoration: none;	
+}
+
+.systemMenuFont{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #FFFFFF;
+	text-decoration:none;
+}
+.menuItem{
+	background-color: #ffffff;
+	cursor: hand;
+	cursor: pointer;
+}
+.resizeCanvas{
+	display: none;
+	overflow: hidden;
+	position:absolute;
+	left: 80px;
+	top: 120px;
+	width:200px;
+	height:100px;
+	bgcolor: #FFFFFF;
+}
+.cursorHand{
+	cursor:hand;
+	cursor:pointer;
+}
+.helpGreenFont{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+	background-color: #FFFFFF;
+}
+
+.help_link{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #25820A;
+}
+.help_link_white{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #FFFFFF;
+}
+.help_text{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #222222;
+}
+.helpFont{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #000000;
+	background-color: #FFFFFF;
+}
+.helpTitleFont{
+	font-family: Verdana;
+	font-size: 15px;
+	color: #000000;
+	font-weight: bolder;
+	background-color: #FFFFFF;
+}
+.help_image{
+	margin:5;
+}
+
+#noScript{
+   font-family: Verdana;
+	font-size: 16px;
+	color: #25820A;
+	border: 1px solid #25820A;
+	padding:10px;
+	margin-top: 100;
+   margin-left: auto;
+   margin-right: auto;
+   width: 50em;
+}

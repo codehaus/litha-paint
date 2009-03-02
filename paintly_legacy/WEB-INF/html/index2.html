@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/tabulate.css">
+
+
+<script src="wz_jsgraphics.js"></script>
+
+<script src="u_open_document_dialog.js"></script>
+<script src="u_save_document_dialog.js"></script>
+
+<script src="event_handlers_keyboard.js"></script>
+<script src="event_handlers.js"></script>
+<script src="line_event_handlers.js"></script>
+<script src="bezier_event_handlers_keyboard.js"></script>
+<script src="bezier_event_handlers.js"></script>
+<script src="bezier_event_handlers_rotation.js"></script>
+<script src="bezier_event_handlers_shift.js"></script>
+<script src="text_type.js"></script>
+<script src="text_event_handlers.js"></script>
+<script src="freehand_event_handlers.js"></script>
+
+<script src="context_menu.js"></script>
+<script src="bezier_contextmenu.js"></script>
+<script src="utility.js"></script>
+
+<script src="network.js"></script>
+
+<script src="wmanager.js"></script>
+<script src="color_picker.js"></script>
+<script src="workspace.js"></script>
+
+<script src="font_bar.js"></script>
+<script src="line_picker.js"></script>
+
+<script src="splashscreen.js"></script>
+<script src="new_document_dialog.js"></script>
+
+<script src="serializator.js"></script>
+<script src="deserializator.js"></script>
+<script src="save_document_dialog.js"></script>
+<script src="open_document_dialog.js"></script>
+<!--script src="upload_document_dialog.js"></script-->
+<script src="main_menu_document_dialog.js"></script>
+<script src="usersafe.js"></script>
+<script src="color_event_handlers.js"></script>
+<script src="download.js"></script>
+<script src="bug_report_dialog.js"></script>
+<script src="export_document_dialog.js"></script>
+<script src="publish_document_dialog.js"></script>
+
+<script src="tabber.js"></script>
+<script src="insert_image_dialog.js"></script>
+<script src="image_event_handlers.js"></script>
+
+<script src="layers.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Description" content="LiTha-Paint - AJAX-based vector drawing service.">
+<meta name="Keywords" content="web-based drawing service,draw,web draw,ajax,web2.0,vector editor,litha-paint">
+<meta http-equiv="imagetoolbar" content="no" />
+
+</HEAD>
+<body leftmargin="0" topmargin="0" oncontextmenu="return false" bgcolor="white" onclick="onClickBody()">
+
+
+<div id="canvas" oncontextmenu = "return false;" style="display: none; overflow: hidden; position:absolute; left: 0px; top: 0px; width:0px; height:0px; z-index:1; clip: auto; border-style: outset; border: solid; border-width: 1px; border-color: #25820A;"></div>
+
+<div id="workspace" oncontextmenu = "return false;" style="overflow: hidden; position:absolute; width:2000px; height:2000px; clip: auto;"></div>
+
+
+<div id="splashscreen" style="display:none;width:400px;height:194px;clip: auto;">
+	<img src="img/litha/splash.gif" width="400px" height="194px">
+</div>
+<iframe name="hidden_frame" id="hidden_frame" style="width:1px; height:0px; display:none;"></iframe>
+<!--script>
+  var logo = parent.document.createElement("img");
+  var logo_height = parent.document.createAttribute("height");
+  logo_height.value = 20;  
+  var logo_src = parent.document.createAttribute("src");
+  logo_src.value="/img/litha/logo.gif";
+  logo.style.zIndex = 2;
+  logo.style.position = "absolute";
+  logo.style.top = parent.frames['litha'].style.top;
+  logo.style.left = parent.frames['litha'].style.left;
+  logo.setAttributeNode(logo_src);
+  logo.setAttributeNode(logo_height);
+  parent.document.body.appendChild(logo);
+</script-->
+<SCRIPT Language="JavaScript"> <!--
+document.write("<img src='http://tort.in.ua/count/img.php?"+Math.random()+"' width=1 height=1 border=0>");//-->
+</SCRIPT>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript"> _uacct="UA-495660-1";urchinTracker(); </script>
+</body>
+<script>
+//postinit actions
+wsx = 0;
+wsy = 0;
+canvas_x = 0;
+canvas_y = 0;
+verScrollbarWidth = 0;
+horScrollbarWidth = 0;
+</script>
+<script src="init.js"></script>
+</HTML>

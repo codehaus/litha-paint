@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<TITLE>Litha-Paint (Beta) - The web-based drawing service</TITLE>
+<noscript>
+   <meta HTTP-EQUIV="REFRESH" CONTENT="0;URL=noscript.html">
+</noscript>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+<link rel="stylesheet" type="text/css" href="./css/tabulate.css">
+
+<link rel="icon" href="http://litha-paint.com/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="http://litha-paint.com/favicon.ico" type="image/x-icon">
+<link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+<script src="wz_jsgraphics.js"></script>
+<script src="tabber.js"></script>
+<script src="index.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Description" content="LiTha-Paint - AJAX-based vector drawing service, powered by web2.0">
+<meta name="Keywords" content="draw,web draw,ajax,web2.0,vector editor,litha-paint">
+<meta http-equiv="imagetoolbar" content="no" />
+
+</HEAD>
+<body leftmargin="0" topmargin="0" oncontextmenu="return false" bgcolor="white" onclick="onClickBody()" scroll="no" scrolling="no">
+
+<div class="lithaHeadPanel">
+   <div class="systemLogoFont">
+      <img src="img/litha/logo.gif" height="20px">&nbsp;Litha - Paint&nbsp;(Beta)
+   </div>
+   <div class="logoProgrammFont">
+      web-based&nbsp;&nbsp;drawing&nbsp;&nbsp;service
+   </div>
+</div>
+<div class="lithaThinLinePanel">&nbsp;</div>
+<div class="lithaMenuHeadPanel">
+   <a href="javascript:performMainMenu('about_us')" class="systemGreenFontMenu">&raquo;&nbsp;About</a>
+   &nbsp;&nbsp;
+   <a target="_blank" href="http://www.litha-paint.blogspot.com" class="systemGreenFontMenu">&raquo;&nbsp;Blog</a>
+   &nbsp;&nbsp;
+   <a target="_blank" href="help.jsp" class="systemGreenFontMenu">&raquo;&nbsp;Help</a>
+   &nbsp;&nbsp;
+   <a target="_blank" href="http://www.litha-paint.com/api-wiki" class="systemGreenFontMenu">&raquo;&nbsp;Wiki</a>
+</div>
+<div id="font_pane" style="display: none; position: absolute; height:30px; width:870px; left:40px;top:55">
+   <img	class="icon" title="new" alt="new"	src="img/icons/new_doc.gif"	onmousedown="new_document()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img	class="icon" title="open" alt="open" src="img/icons/open_doc.gif" onmousedown="u_performOpenDocument()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img class="icon" title="save" alt="save" src="img/icons/save_doc.gif" onmousedown="u_performSaveDocument()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img class="icon" title="import" alt="import" src="img/icons/import_pic.gif" onmousedown="switchInsertImg()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="import" />
+   <img class="icon" title="undo" alt="undo" src="img/icons/undo.gif" onmousedown="performUndo()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img class="icon" title="redo" alt="redo" src="img/icons/redo.gif" onmousedown="performRedo()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img class="icon" title="delete" alt="delete" src="img/icons/erase.gif" onmousedown="switchEraser()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <img class="icon" title="copy" alt="copy" src="img/icons/copy.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="performCopy();"/>
+   <img class="icon" title="paste" alt="paste" src="img/icons/paste.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="performPaste();"/>
+   
+   <img class="icon" title="send to back" alt="send to back" src="img/icons/layer_bottom.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="bringFocusedBottom();"/>
+   <img class="icon" title="send backward" alt="send backward" src="img/icons/layer_down.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="bringFocusedBack();"/>
+   <img class="icon" title="bring forward" alt="bring forward" src="img/icons/layer_up.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="bringFocusedFront();"/>
+   <img class="icon" title="bring to front" alt="bring to front" src="img/icons/layer_top.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" onmousedown="bringFocusedTop();"/>
+   
+   <img class="icon" title="bug report" alt="bug report" src="img/icons/bug.gif" onmousedown="performReportDocument()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+   <a target="_blank" href="./help.jsp" border="0"><img class="icon" title="help" alt="help" src="img/icons/about.gif" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" /></a>
+   <!--onmousedown="helpSystem()"-->
+   &nbsp;&nbsp;&nbsp;
+   <img id="btnBold" src="img/pickers/font_bold.gif" onClick="pressButton('btnBold')">
+   <img id="btnItalic" src="img/pickers/font_italic.gif" onClick="pressButton('btnItalic')">
+   <select class="systemGreenFont" id="selFontSize" style="position:relative; top:-10px; width:60px" onChange="changeSelector('selFontSize')">
+      <option value="8px">8px</option>
+      <option value="10px">10px</option>
+      <option value="12px">12px</option>
+      <option value="14px">14px</option>
+      <option value="16px">16px</option>
+      <option value="18px">18px</option>
+      <option value="20px">20px</option>
+      <option value="22px">22px</option>
+      <option value="24px">24px</option>
+      <option value="26px">26px</option>
+      <option value="28px">28px</option>
+      <option value="30px">30px</option>
+   </select>
+   <select class="systemGreenFont" id="selFontStyle" style="position:relative; top:-10px; width:80px;" onChange="changeSelector('selFontStyle')">
+      <option value="Arial">Arial</option>
+      <option value="Courier">Courier</option>		
+      <option value="Impact">Impact</option>
+      <option value="Tahoma">Tahoma</option>		
+      <option value="Times">Times</option>
+      <option value="Verdana">Verdana</option>
+   </select>
+</div>
+
+<div id="control_pane" style="background-color:#FFFFFF; position: absolute; height:350px;width:35px;left:0px;top:60px;">
+<img id="arrow" class="icon" title="arrow" alt="arrow" src="img/icons/arrow.gif" onmousedown="switchArrow()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="arrow"/>
+<img class="icon" title="hand" alt="hand" src="img/icons/hand.gif" onmousedown="switchHand()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="hand"/>
+<img class="icon" title="line" alt="line" src="img/icons/line.gif" onmousedown="switchLine()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="singleline"/>
+<img class="icon" title="polyline" alt="polyline" src="img/icons/polyline.gif" onmousedown="switchPolyline()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="polyline"/>
+<img class="icon" title="polygon" alt="polygon" src="img/icons/polygon.gif" onmousedown="switchPolygon()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="polygon"/>
+<img class="icon" title="bezier" alt="bezier" src="img/icons/bezier.gif" onmousedown="switchBezier()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="bezier"/>
+<img class="icon" title="pen" alt="pen" src="img/icons/pen.gif" onmousedown="switchPen()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="pen"/>
+<img class="icon" title="closed pen" alt="closed pen" id="lasso"  src="img/icons/lasso.gif" onmousedown="switchLasso()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';"/>
+<img class="icon" title="ellipse" alt="ellipse" src="img/icons/ellipse.gif" onmousedown="switchEllipse()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="ellipse"/>
+<img class="icon" title="square" alt="square" src="img/icons/square.gif" onmousedown="switchSquare()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="square"/>
+<img class="icon" title="text" alt="text" src="img/icons/text.gif" onmousedown="switchText()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="text"/>
+<img class="icon" title="apply filling color" alt="fill color" src="img/icons/fill.gif" onmousedown="switchApplyFillColor()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="applyFillColor"/>
+<div style="height:21px;width:21px;margin-left:7;margin-bottom:6;margin-top:6;border:solid;border-width: 1; border-color:#25820A;" class="cursorHand" bgcolor="white" align="center" onmousedown="switchFillColor()">
+	<div id="btnfillColor" style="height:21px;width:21px;padding:0" align="center">
+		<img border="0" src="img/zero.gif" title="" alt="" height="21" width="21" align="center"/>
+	</div>
+</div>
+
+<img class="icon" title="apply stroke color" alt="stroke color" src="img/icons/stroke.gif" onmousedown="switchApplyStrokeColor()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="applyStrokeColor"/>
+
+<div style="height:21px;width:21px;margin-left:7;margin-bottom:6;margin-top:6;border: solid; border-width: 1; border-color:#25820A;" class="cursorHand" bgcolor="white" align="center" onmousedown="switchStrokeColor()" id="btnstrokeColor_td">
+
+	<table cellspacing="0" cellpadding="0" width="21" height="21">
+		<tr>
+			<td width="100%" height="6" colspan="3"></td>
+		</tr>
+		<tr>
+			<td width="6" height="9" ></td>
+			<td width="9" height="9" bgcolor="white"></td>
+			<td width="6" height="9" ></td>
+		</tr>
+		<tr>
+			<td width="100%" height="6" colspan="3"></td>
+		</tr>
+	</table>
+		</div>
+		
+<img class="icon" title="stroke type" alt="stroke type" src="img/icons/stroke_type.gif" onmousedown="switchStrokeType()" style="position:relative;" onmouseover="processOverButton(this)" onmouseout="this.className='icon';" id="strokType"/>
+</div>
+
+<div id="canvas" oncontextmenu = "return false;" style="display: none; overflow: hidden; position:absolute; left: 40px; top: 90px; width:0px; height:0px; z-index:1; clip: auto; border-style: outset; border: solid; border-width: 1px; border-color: #25820A;"></div>
+
+<div id="workspace" oncontextmenu = "return false;" style="overflow: hidden; position:absolute; left: 40px; top: 90px; width:2000px; height:2000px; clip: auto;"></div>
+
+<div id="message1" oncontextmenu = "return false;" class="resizeCanvas" align="center">
+	<table class="systemColor" style="border-width:1;border-color:'#25820A'" bgcolor="white" cellspacing="0" cellpadding="0" border="0" width="99%" height="99" align="center">
+		<tr>
+			<td align="left" class="systemGreenFont" style="padding:5" height="20">
+				Not enough space for drawing. Please increase browser's window size
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="splashscreen" style="display:none;width:400px;height:194px;clip: auto;">
+	<img src="img/litha/splash.gif" width="400px" height="194px">
+</div>
+<iframe name="hidden_frame" id="hidden_frame" style="width:1px; height:0px; display:none;"></iframe>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript"> _uacct="UA-495660-1";urchinTracker(); </script>
+</body>
+<script>initCanvas();</script>
+</HTML>

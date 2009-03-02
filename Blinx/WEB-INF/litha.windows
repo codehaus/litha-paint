@@ -1,0 +1,16 @@
+# common config proeprtyfile for paintly project
+
+# session invalidate time
+invalidate_session_time = 6000
+
+
+# directory where documents and images would be saved
+userspace.dir = c:\\apache-tomcat-5.5.17\\webapps\\jsp-examples
+
+
+#directory where client exceptions are saved
+clientexception.dir = C:\\Temp\\UserExceptions
+
+temp = C:\\Temp
+
+web.dir = http://localhost:6946/jsp-examples

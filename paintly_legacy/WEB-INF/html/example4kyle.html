@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>
+Exmple for Kyle
+</title>
+
+<script>
+/* 
+Callback functions are prefixed with "lpcb" where lp means Litha-Paint and cb means "Callback". 
+Callback functions are triggered by the events of the the Litha-Paint.
+*/
+
+
+//caled once when Litha canvas is about to initialize. You can use it for example for creating cookie.
+function lpcbBeforeInit(){
+  var litha = frames["litha"];  
+  litha.document.cookie="userid=Kyle; expires=Thu, 2 Aug 2010 20:47:11 UTC; path=/"; //"Kyle" is your id, so don't change it. If you wish another one, letus know -> we would create server-side scructure for your new id.
+  litha.fitWorkspace = false; //diable fitting workspace into viewport, so scrollbars would be enabled, eliminating needs in "hand" tool.
+}
+
+function lpcbAfterInit(){
+  var litha = frames["litha"];  
+  litha.onresize = "";
+}
+
+// Called after image has been saves to the server and have got url that could be used for retrieving that image.
+function lpcbAfterPublish(url){
+  alert("lpcbAfetrPublish(): "+url);
+  window.open(url); //you can pass an url to your service that would retrieve it from our server as well.
+}
+
+//This function is triggered by the save button on the toolbox and is not callback-kind function. 
+//Litha JavaScript API could be used to perform tasks such as saving, publishing, loading documents, etc.
+
+function kyleSpecificSave(){  
+  var litha = frames["litha"];  
+  var doc_name = "map"+ new Date().getTime();  
+  litha.performSave(doc_name);  //this step is neccessary if you want your visitor to be able to load the document later
+  litha.performPublish(doc_name,"png"); //this enables you to retrieve png picture from Litha server    
+}
+
+</script>
+</head>
+<body>
+This is a site specific content.<br /> I've put Litha-Paint toolbar for you. Feel free to remove it and create your own.
+
+<div id="font_pane" style="height:30px; width:870px;">
+   <img	title="new" alt="new"	src="img/icons/new_doc.gif"	onmousedown="frames['litha'].new_document()" style="position:relative;" />
+   <img	title="open" alt="open" src="img/icons/open_doc.gif" onmousedown="frames['litha'].u_performOpenDocument()" style="position:relative;" />
+   <img title="save" alt="save" src="img/icons/save_doc.gif" onmousedown="kyleSpecificSave()" style="position:relative;" />
+   <img title="import" alt="import" src="img/icons/import_pic.gif" onmousedown="frames['litha'].switchInsertImg()" style="position:relative;" id="import" />
+   <img title="undo" alt="undo" src="img/icons/undo.gif" onmousedown="frames['litha'].performUndo()" style="position:relative;" />
+   <img title="redo" alt="redo" src="img/icons/redo.gif" onmousedown="frames['litha'].performRedo()" style="position:relative;" />
+   <img title="delete" alt="delete" src="img/icons/erase.gif" onmousedown="frames['litha'].switchEraser()" style="position:relative;" />
+   <img title="copy" alt="copy" src="img/icons/copy.gif" onmousedown="frames['litha'].performCopy()" />
+   <img title="paste" alt="paste" src="img/icons/paste.gif" onmousedown="frames['litha'].performPaste()"/>
+   
+   <img title="bring to bottom" alt="bring to bottom" src="img/icons/layer_bottom.gif" onmousedown="frames['litha'].bringFocusedBottom();"/>
+   <img title="push down" alt="push down" src="img/icons/layer_down.gif" onmousedown="frames['litha'].bringFocusedBack();"/>
+   <img title="pull up" alt="pull up" src="img/icons/layer_up.gif" onmousedown="frames['litha'].bringFocusedFront();"/>
+   <img title="bring to top" alt="bring to top" src="img/icons/layer_top.gif" onmousedown="frames['litha'].bringFocusedTop();"/>        
+   &nbsp;&nbsp;&nbsp;
+   <img id="btnBold" src="img/pickers/font_bold.gif" onClick="pressButton('btnBold')">
+   <img id="btnItalic" src="img/pickers/font_italic.gif" onClick="pressButton('btnItalic')">
+   <select class="systemGreenFont" id="selFontSize" style="position:relative; top:-10px; width:60px" onChange="frames['litha'].changeSelector('selFontSize')">
+      <option value="8px">8px</option>
+      <option value="10px">10px</option>
+      <option value="12px">12px</option>
+      <option value="14px">14px</option>
+      <option value="16px">16px</option>
+      <option value="18px">18px</option>
+      <option value="20px">20px</option>
+      <option value="22px">22px</option>
+      <option value="24px">24px</option>
+      <option value="26px">26px</option>
+      <option value="28px">28px</option>
+      <option value="30px">30px</option>
+   </select>
+   <select class="systemGreenFont" id="selFontStyle" style="position:relative; top:-10px; width:80px;" onChange="frames['litha'].changeSelector('selFontStyle')">
+      <option value="Arial">Arial</option>
+      <option value="Courier">Courier</option>		
+      <option value="Impact">Impact</option>
+      <option value="Tahoma">Tahoma</option>		
+      <option value="Times">Times</option>
+      <option value="Verdana">Verdana</option>
+   </select>
+</div>
+
+<div id="control_pane" style="background-color:#FFFFFF; height:350px;width:35px;">
+<img id="arrow" class="icon" title="arrow" alt="arrow" src="img/icons/arrow.gif" onmousedown="frames['litha'].switchArrow()" style="position:relative;" id="arrow"/>
+<img class="icon" title="hand" alt="hand" src="img/icons/hand.gif" onmousedown="frames['litha'].switchHand()" style="position:relative;" id="hand"/>
+<img class="icon" title="line" alt="line" src="img/icons/line.gif" onmousedown="frames['litha'].switchLine()" style="position:relative;" id="singleline"/>
+<img class="icon" title="ellipse" alt="ellipse" src="img/icons/ellipse.gif" onmousedown="frames['litha'].switchEllipse()" style="position:relative;" id="ellipse"/>
+<img class="icon" title="square" alt="square" src="img/icons/square.gif" onmousedown="frames['litha'].switchSquare()" style="position:relative;" id="square"/>
+<img class="icon" title="text" alt="text" src="img/icons/text.gif" onmousedown="frames['litha'].switchText()" style="position:relative;" id="text"/>		
+</div>
+
+<iframe style="position: absolute; left: 50px; top: 90px;" name="litha" src="/index2.html" width="800" height="500">
+</iframe>
+
+</body>
+<script>
+  
+</script>
+</html>

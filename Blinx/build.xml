@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="blinx" basedir="." default="deploy.test.win">
+   <property name="src" location="${basedir}/src"/>	
+   <property name="lib" location="${basedir}/lib"/>
+   <property name="doc" location="${basedir}/doc"/>
+   <property name="tmp" location="${basedir}/tmp"/>
+   <property name="obfusc" location="${basedir}/obfuscator"/>
+   <property name="build" location="${basedir}/WEB-INF/classes"/>
+   <property name="html" location="${basedir}/WEB-INF/html"/>
+   <property name="war" location="${basedir}/war"/>
+   <property name="tomcat_webapp" location="C:/apache-tomcat-5.5.17/webapps/"/>	
+
+   <path id="project.class.path">
+       <fileset dir="${lib}">
+       <include name="*.jar"/>
+       </fileset>
+       <dirset dir="${build}"/>
+   </path>	
+	
+   <target name="clean.test.webapp">
+   	  <delete dir="${tomcat_webapp}/ROOT"/>
+   	  <delete file="${tomcat_webapp}/ROOT.war" />
+   </target>
+	
+   <target name="clean">
+       <delete dir="${doc}"/>
+       <delete dir="${war}"/>
+   	   <delete dir="${tmp}"/>
+       <delete dir="${build}"/>
+       <delete dir="${build}/**.*"/>
+   </target>
+
+   <target name="init" depends="clean">
+     <tstamp/>
+     <mkdir dir="${build}"/>
+     <mkdir dir="${war}"/>	 
+   	 <mkdir dir="${tmp}"/>
+   </target>
+	
+   <target name="prepare.development" depends="init">
+	<copy todir="${tmp}">
+		<fileset dir="${basedir}/WEB-INF/html">
+			<include name="**/*.*"/>
+		</fileset>
+	</copy>
+   	<copyfile dest="${tmp}/homeUrl.js" src="${basedir}/WEB-INF/homeUrl.js.test"/>
+	</target>
+	
+   <target name="prepare.production.linux" depends="init">
+	<copy todir="${tmp}">
+		<fileset dir="${basedir}/WEB-INF/html">
+			<include name="**/*.*"/>
+		</fileset>
+	</copy>
+   	<copyfile dest="${tmp}/homeUrl.js" src="${basedir}/WEB-INF/homeUrl.js.production.linux"/>
+	</target>
+
+   <target name="prepare.production.win" depends="init">
+	<copy todir="${tmp}">
+		<fileset dir="${basedir}/WEB-INF/html">
+			<include name="**/*.*"/>
+		</fileset>
+	</copy>
+   	<copyfile dest="${tmp}/homeUrl.js" src="${basedir}/WEB-INF/homeUrl.js.production.win"/>
+	</target>
+
+
+   <target name="compile.development" depends="prepare.development">
+      <javac srcdir="${src}" destdir="${build}" debug="yes" classpathref="project.class.path"/>
+   </target>
+
+   <target name="compile.production.linux" depends="prepare.production.linux">
+      <javac srcdir="${src}" destdir="${build}" debug="yes" classpathref="project.class.path"/>
+   </target>
+
+	<target name="compile.production.win" depends="prepare.production.win">
+	  <javac srcdir="${src}" destdir="${build}" debug="yes" classpathref="project.class.path"/>
+	</target>
+
+	
+   <target name="docgen">
+      <mkdir dir="${doc}"/>
+      <javadoc destdir="${doc}" classpathref="project.class.path">
+         <fileset dir="${src}"/>
+      </javadoc>
+   </target>
+	
+   <target name="preprocess.development" depends="compile.development">
+   	 <exec executable="m4" output="${tmp}/litha.js">
+   	 	<arg line="--prefix-builtins" />
+   	 	<arg file="${tmp}/blinx.js" />   	 		
+   	 </exec>
+   	<delete file="${tmp}/blinx.js" />
+   </target>
+	
+   <target name="preprocess.production.linux" depends="compile.production.linux">
+   	 <exec executable="m4" output="${tmp}/litha.js">
+   	 	<arg line="--prefix-builtins" />
+   	 	<arg file="${tmp}/blinx.js" />   	 		
+   	 </exec>
+   	<delete file="${tmp}/blinx.js" />
+   </target>
+
+   <target name="preprocess.production.win" depends="compile.production.win">
+   	 <exec executable="m4" output="${tmp}/litha.js">
+   	 	<arg line="--prefix-builtins" />
+   	 	<arg file="${tmp}/blinx.js" />   	 		
+   	 </exec>
+   	<delete file="${tmp}/blinx.js" />
+   </target>
+	
+	
+	<target name="obfuscate.js.development" depends="preprocess.development">
+		<java classname="JSO" classpath="${obfusc}" dir="${tmp}" fork="yes">
+			<arg value="litha.js" />
+			<arg value="e=${obfusc}/final.txt" />
+			<redirector output="${tmp}/litha.jso" error="${obfusc}/map.txt"></redirector>
+		</java>
+		<delete file="${tmp}/litha.js" />
+		<move tofile="${tmp}/litha.js" file="${tmp}/litha.jso"/>
+	</target>
+	
+	<target name="obfuscate.js.production.win" depends="preprocess.production.win">
+		<java classname="JSO" classpath="${obfusc}" dir="${tmp}" fork="yes">
+			<arg value="litha.js" />
+			<arg value="e=${obfusc}/final.txt" />
+			<redirector output="${tmp}/litha.jso" error="${obfusc}/map.txt"></redirector>
+		</java>
+		<delete file="${tmp}/litha.js" />
+		<move tofile="${tmp}/litha.js" file="${tmp}/litha.jso"/>
+	</target>
+	
+	<target name="obfuscate.js.production.linux" depends="preprocess.production.linux">
+		<java classname="JSO" classpath="${obfusc}" dir="${tmp}" fork="yes">
+			<arg value="litha.js" />
+			<arg value="e=${obfusc}/final.txt" />
+			<redirector output="${tmp}/litha.jso" error="${obfusc}/map.txt"></redirector>
+		</java>
+		<delete file="${tmp}/litha.js" />
+		<move tofile="${tmp}/litha.js" file="${tmp}/litha.jso"/>
+	</target>
+
+
+
+   
+   <target name="full.build">
+      <antcall target="deploy"/>  
+      <antcall target="docgen"/> 	
+   </target>
+	
+	<target name="update_light">
+		<copy todir="${tomcat_webapp}/${ant.project.name}">
+			<fileset dir="${html}" />
+		</copy>
+	</target>
+	
+	
+
+	  <target name="build.test.win" depends="preprocess.development">
+	    <echo message="Building litha-project in test mode for Win"/>
+		<copy todir="${build}">
+			<fileset dir="${basedir}/WEB-INF">
+				<include name="*.properties"/>
+				<include name="*.windows"/>
+			</fileset>
+		</copy>
+	  	<move todir="${build}">
+	  		<fileset dir="${build}">
+	  			<include name="*.windows"/>
+	  	     </fileset>
+	  		<globmapper from="*.windows" to="*.properties"/>
+	  	</move>
+		<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+			<fileset dir="${tmp}">
+				<exclude name="homeUrl.js" />
+			</fileset>
+			<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+		</war>
+	  </target>
+	
+	
+	  <target name="deploy.test.win" depends="clean.test.webapp, clean, build.test.win">
+	  	  <copy todir="${tomcat_webapp}">
+	  	  	  <fileset dir="${war}">
+	  	  	  	<include name="ROOT.war" />
+	  	  	  </fileset>
+	  	  </copy>
+	  </target>
+	
+	  <target name="build.production.win" depends="obfuscate.js.production.win">
+	    <echo message="Building litha-project in production mode for Win"/>
+		<copy todir="${build}">
+			<fileset dir="${basedir}/WEB-INF">
+				<include name="*.properties"/>
+				<include name="*.windows"/>
+			</fileset>
+		</copy>
+	  	<move todir="${build}">
+	  		<fileset dir="${build}">
+	  			<include name="*.windows"/>
+	  	     </fileset>
+	  		<globmapper from="*.windows" to="*.properties"/>
+	  	</move>
+		<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+			<fileset dir="${tmp}">
+				<exclude name="homeUrl.js" />
+			</fileset>
+			<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+		</war>
+	  </target>
+
+	
+	  <target name="deploy.production.win" depends="clean.test.webapp, clean, build.production.win">
+	  	  <copy todir="${tomcat_webapp}">
+	  	  	  <fileset dir="${war}">
+	  	  	  	<include name="ROOT.war" />
+	  	  	  </fileset>
+	  	  </copy>
+	  </target>
+	
+	  <target name="build.production.linux" depends="obfuscate.js.production.linux">
+	    <echo message="Building litha-project in production mode for Linux"/>
+		<copy todir="${build}">
+			<fileset dir="${basedir}/WEB-INF">
+				<include name="*.properties"/>
+				<include name="*.linux"/>
+			</fileset>
+		</copy>
+	  	<move todir="${build}">
+	  		<fileset dir="${build}">
+	  			<include name="*.linux"/>
+	  	     </fileset>
+	  		<globmapper from="*.linux" to="*.properties"/>
+	  	</move>
+		<war warfile="${war}/ROOT.war" webxml="${basedir}/WEB-INF/web.xml">
+			<fileset dir="${tmp}">
+				<exclude name="homeUrl.js" />
+			</fileset>
+			<classes dir="${build}" includes="**/*.properties, **/*.class" excludes="UnionJSFiles.class"/>
+		</war>
+	  </target>
+
+
+
+</project>
