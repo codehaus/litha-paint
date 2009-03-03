@@ -140,10 +140,9 @@ function calculateText(objHiddenSpan, textValue, delimeter) {
 }
 
 function setClipWidth(obj, width) {
-	if(obj) {
-		var clipArray = obj.style.clip.split(",");
-	    return clipArray[0]+","+width+","+clipArray[2]+","+clipArray[3];
-	}
+    var splitter = /,/.test(obj.style.clip) ? "," : " ";
+    var clipArray = obj.style.clip.split(splitter);
+    return [clipArray[0], width, clipArray[2], clipArray[3]].join(splitter);
 }
 
 function getJsFontStyle(){
